@@ -9,7 +9,7 @@ function DogList(props){
             <Card.Description>{dog.breed}</Card.Description>
           </Card.Content>
           <Card.Content extra>
-            <Button>Delete Dog</Button>
+            <Button onClick={() => props.deleteDog(dog.id)}>Delete Dog</Button>
             <Button>Edit Dog</Button>
           </Card.Content>
         </Card>

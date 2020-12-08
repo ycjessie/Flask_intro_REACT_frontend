@@ -35,7 +35,10 @@ class DogContainer extends Component {
       // The createdDogResponse variable will store the response from the Flask API
       const createdDogResponse = await axios.post(
         process.env.REACT_APP_FLASK_API_URL + '/api/v1/dogs/',
-        dog
+        dog,
+        {headers: {
+          'Content-Type': 'application/json'
+        }}
       );
 
       // we are emptying all the dogs that are living in state into a new array,
