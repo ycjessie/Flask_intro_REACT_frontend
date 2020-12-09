@@ -22,15 +22,9 @@ class DogContainer extends Component {
   componentDidMount() {
     this.getDogs();
   }
-  //using the spread operator again to empty our object in the dogToEdit
-  handleEditChange = (e) => {
-    this.setState({
-      dogToEdit: {
-        ...this.state.dogToEdit,
-        [e.currentTarget.name]: e.currentTarget.value,
-      },
-    });
-  };
+  //using the spread operator  empty our object 
+  //in the dogToEdit
+
   getDogs = async () => {
     try {
       const parsedDogs = await axios(
@@ -84,6 +78,14 @@ class DogContainer extends Component {
 
     console.log(deleteDogResponse, " response from Flask server");
   };
+  handleEditChange = (e) => {
+    this.setState({
+      dogToEdit: {
+        ...this.state.dogToEdit,//using the spread operator
+        [e.currentTarget.name]: e.currentTarget.value,
+      },
+    });
+  };
   //https://git.generalassemb.ly/prudential-0921/flask-react-edit-dog-app
   openAndEdit = (dogFromTheList) => {
     console.log(dogFromTheList, " dogToEdit  ");
@@ -100,6 +102,8 @@ class DogContainer extends Component {
   closeAndEdit = async (e) => {
     e.preventDefault();
     try {
+      //axios calling the backend
+      //already tested with Postman
       const editResponse = await axios.put(
         process.env.REACT_APP_FLASK_API_URL +
           "/api/v1/dogs/" +
@@ -108,12 +112,11 @@ class DogContainer extends Component {
       );
 
       console.log(editResponse, " parsed edit");
-
+        //use Map() to create a new array
       const newDogArrayWithEdit = this.state.dogs.map((dog) => {
         if (dog.id === editResponse.data.data.id) {
           dog = editResponse.data.data;
         }
-
         return dog;
       });
 
@@ -126,6 +129,7 @@ class DogContainer extends Component {
     }
   };
   render() {
+    console.log(this.state)//reassigning dog to edit lift up
     return (
       <Grid
         columns={2}
@@ -150,6 +154,7 @@ class DogContainer extends Component {
           {/* Edit Dog */}
           <EditDogModal
             handleEditChange={this.handleEditChange}
+            //pop up window for EditModal
             open={this.state.showEditModal}
             dogToEdit={this.state.dogToEdit}
             closeAndEdit={this.closeAndEdit}
