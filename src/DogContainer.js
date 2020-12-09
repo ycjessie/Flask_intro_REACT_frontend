@@ -5,24 +5,34 @@ import DogList from "./DogList";
 // import Create Dog form
 import CreateDogForm from "./CreateDogForm";
 //import Dog Edit form
-import EditDogModal from './EditDogModal';
+import EditDogModal from "./EditDogModal";
 class DogContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dogs: [],
-      dogToEdit: {//setup to prefill the edit form
-        name: '',
-        breed: '',
-        owner: '',
-        id: ''
+      dogToEdit: {
+        //setup to prefill the edit form
+        name: "",
+        breed: "",
+        owner: "",
+        id: "",
       },
-      showEditModal: false//track if Modal is open/close
+      showEditModal: false, //track if Modal is open/close
     };
   }
   componentDidMount() {
     this.getDogs();
   }
+  //using the spread operator again to empty our object in the dogToEdit
+  handleEditChange = (e) => {
+    this.setState({
+      dogToEdit: {
+        ...this.state.dogToEdit,
+        [e.currentTarget.name]: e.currentTarget.value,
+      },
+    });
+  };
   getDogs = async () => {
     try {
       const parsedDogs = await axios(
@@ -78,16 +88,45 @@ class DogContainer extends Component {
   };
   //https://git.generalassemb.ly/prudential-0921/flask-react-edit-dog-app
   openAndEdit = (dogFromTheList) => {
-    console.log(dogFromTheList, ' dogToEdit  ');
-  
+    console.log(dogFromTheList, " dogToEdit  ");
+
     this.setState({
       showEditModal: true,
       dogToEdit: {
-        //spreading the dogFromTheList 
+        //spreading the dogFromTheList
         //lifting up from the DogList component.
         ...dogFromTheList,
       },
     });
+  };
+  //Edit Dog
+  closeAndEdit = async (e) => {
+    e.preventDefault();
+    try {
+      const editResponse = await axios.put(
+        process.env.REACT_APP_FLASK_API_URL +
+          "/api/v1/dogs/" +
+          this.state.dogToEdit.id,
+        this.state.dogToEdit
+      );
+
+      console.log(editResponse, " parsed edit");
+
+      const newDogArrayWithEdit = this.state.dogs.map((dog) => {
+        if (dog.id === editResponse.data.data.id) {
+          dog = editResponse.data.data;
+        }
+
+        return dog;
+      });
+
+      this.setState({
+        showEditModal: false,
+        dogs: newDogArrayWithEdit,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
   render() {
     return (
@@ -102,11 +141,22 @@ class DogContainer extends Component {
         <Grid.Row>
           <Grid.Column>
             {/* render functions */}
-            <DogList dogs={this.state.dogs} deleteDog={this.deleteDog} openAndEdit={this.openAndEdit}/>
+            <DogList
+              dogs={this.state.dogs}
+              deleteDog={this.deleteDog}
+              openAndEdit={this.openAndEdit}
+            />
           </Grid.Column>
           <Grid.Column>
             <CreateDogForm addDog={this.addDog} />
           </Grid.Column>
+          {/* Edit Dog */}
+          <EditDogModal
+            handleEditChange={this.handleEditChange}
+            open={this.state.showEditModal}
+            dogToEdit={this.state.dogToEdit}
+            closeAndEdit={this.closeAndEdit}
+          />
         </Grid.Row>
       </Grid>
     );
