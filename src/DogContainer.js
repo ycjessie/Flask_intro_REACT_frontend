@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
 import axios from "axios";
 import DogList from "./DogList";
-// make sure to import the form
+// import Create Dog form
 import CreateDogForm from "./CreateDogForm";
+//import Dog Edit form
+import EditDogModal from './EditDogModal';
 class DogContainer extends Component {
   constructor(props) {
     super(props);
@@ -99,7 +101,8 @@ class DogContainer extends Component {
       >
         <Grid.Row>
           <Grid.Column>
-            <DogList dogs={this.state.dogs} deleteDog={this.deleteDog} />
+            {/* render functions */}
+            <DogList dogs={this.state.dogs} deleteDog={this.deleteDog} openAndEdit={this.openAndEdit}/>
           </Grid.Column>
           <Grid.Column>
             <CreateDogForm addDog={this.addDog} />

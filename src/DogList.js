@@ -10,7 +10,10 @@ function DogList(props){
           </Card.Content>
           <Card.Content extra>
             <Button onClick={() => props.deleteDog(dog.id)}>Delete Dog</Button>
-            <Button>Edit Dog</Button>
+            {/* onClick on button for edit dog passing down from Dogcontainer */}
+            {/* https://git.generalassemb.ly/prudential-0921/flask-react-edit-dog-app */}
+            <Button onClick={() => props.openAndEdit(dog)}>Edit Dog</Button>
+            {/* pass up the dog to DogContainer so add it to state, and open Modal. */}
           </Card.Content>
         </Card>
         )
