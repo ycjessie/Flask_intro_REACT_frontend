@@ -7,9 +7,7 @@ import CreateDogForm from "./CreateDogForm";
 //import Dog Edit form
 import EditDogModal from "./EditDogModal";
 class DogContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
       dogs: [],
       dogToEdit: {
         //setup to prefill the edit form
@@ -20,7 +18,7 @@ class DogContainer extends Component {
       },
       showEditModal: false, //track if Modal is open/close
     };
-  }
+  
   componentDidMount() {
     this.getDogs();
   }
@@ -93,9 +91,8 @@ class DogContainer extends Component {
     this.setState({
       showEditModal: true,
       dogToEdit: {
-        //spreading the dogFromTheList
         //lifting up from the DogList component.
-        ...dogFromTheList,
+        ...dogFromTheList,//spreading the dogFromTheList
       },
     });
   };
