@@ -29,7 +29,7 @@ class CreateDogForm extends Component {
               <Label>Owner:</Label>
               <Form.Input reqired type='text' name='owner' value={this.state.owner} onChange={this.handleChange}/>
               <Label>Breed:</Label>
-              <Form.Input required type='text' name='breed' value={this.state.breed} onChange={this.handleChange}/>
+              <Form.Input requiredtype='text' name='breed' value={this.state.breed} onChange={this.handleChange}/>
               <Button type='Submit'>Create Dog</Button>
             </Form>
           </Segment>
