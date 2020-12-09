@@ -74,6 +74,19 @@ class DogContainer extends Component {
 
     console.log(deleteDogResponse, " response from Flask server");
   };
+  //https://git.generalassemb.ly/prudential-0921/flask-react-edit-dog-app
+  openAndEdit = (dogFromTheList) => {
+    console.log(dogFromTheList, ' dogToEdit  ');
+  
+    this.setState({
+      showEditModal: true,
+      dogToEdit: {
+        //spreading the dogFromTheList 
+        //lifting up from the DogList component.
+        ...dogFromTheList,
+      },
+    });
+  };
   render() {
     return (
       <Grid
