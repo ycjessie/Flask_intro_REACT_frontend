@@ -32,6 +32,9 @@ const EditDogModal = (props) => {
               <Button color="green" type="submit">
                 Edit Dog
               </Button>
+              <Button color="grey" type="submit" onClick={props.closeModel}>
+                I change my mind
+              </Button>
             </Modal.Actions>
           </Form>
         </Modal.Content>

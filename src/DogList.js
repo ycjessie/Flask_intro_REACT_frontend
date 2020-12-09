@@ -5,8 +5,9 @@ function DogList(props){
     return (
         <Card key={dog.id}>
           <Card.Content>
-            <Card.Header>{dog.name}</Card.Header>
+            <Card.Header>{dog.name} </Card.Header>
             <Card.Description>{dog.breed}</Card.Description>
+            <Card.Description>Owner: {dog.owner} </Card.Description>
           </Card.Content>
           <Card.Content extra>
             <Button onClick={() => props.deleteDog(dog.id)}>Delete Dog</Button>

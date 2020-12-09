@@ -98,6 +98,10 @@ class DogContainer extends Component {
       },
     });
   };
+  
+  closeModal=()=>{
+    this.showEditModal= false
+  }
   //Edit Dog
   closeAndEdit = async (e) => {
     e.preventDefault();
@@ -158,6 +162,7 @@ class DogContainer extends Component {
             open={this.state.showEditModal}
             dogToEdit={this.state.dogToEdit}
             closeAndEdit={this.closeAndEdit}
+            closeModal={this.closeModal}
           />
         </Grid.Row>
       </Grid>
